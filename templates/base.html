@@ -1,0 +1,111 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{% block title %}Volunteer Management{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        header {
+            background: #222;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        header .branding {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        header .tagline {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        nav {
+            background: #333;
+            padding: 10px 20px;
+            display: flex;
+            gap: 15px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            background: #222;
+            color: #ccc;
+            padding: 10px;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+        .container {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with branding -->
+    <header>
+        <div>
+            <div class="branding">Volunteer Management</div>
+            <div class="tagline">Empowering Communities Together</div>
+        </div>
+        <div>
+            {% if not session.user_email %}
+                <a href="{{ url_for('login') }}" style="color:white;margin-right:10px;">Login</a>
+                <a href="{{ url_for('register') }}" style="color:white;">Register</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    {% if session.user_email %}
+        <nav>
+            {% if session.role == 'admin' %}
+                <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('create_role') }}">Create Role</a>
+                <a href="{{ url_for('create_shift') }}">Create Shift</a>
+                <a href="{{ url_for('manage_volunteers') }}">Manage Volunteers</a>
+                <a href="{{ url_for('reports') }}">Reports</a>
+            {% else %}
+                <a href="{{ url_for('volunteer_dashboard') }}">My Dashboard</a>
+                <a href="{{ url_for('availability') }}">My Availability</a>
+                <a href="{{ url_for('upload_document') }}">Upload Documents</a>
+                <a href="{{ url_for('shift_history') }}">Shift History</a>
+            {% endif %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    {% endif %}
+
+    <!-- Flash Messages -->
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Page Content -->
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        &copy; {{ current_year }} Volunteer Management System. All rights reserved.
+    </footer>
+</body>
+</html>

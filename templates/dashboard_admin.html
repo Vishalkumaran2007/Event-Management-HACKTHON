@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<h3>Create Shift</h3>
+<form method="POST" action="{{ url_for('create_shift') }}">
+    <label>Shift Name:</label>
+    <input type="text" name="shift_name" required>
+    <label>Date:</label>
+    <input type="date" name="date" required>
+    <button type="submit">Create Shift</button>
+</form>
+
+<h3>All Shifts</h3>
+{% for shift in shifts %}
+<div class="card">
+    <strong>{{ shift.shift_name }}</strong><br>
+    Date: {{ shift.date }}<br>
+    Volunteers: {{ shift.volunteers|join(', ') if shift.volunteers else "None" }}
+</div>
+{% else %}
+<p>No shifts created yet.</p>
+{% endfor %}
+
+<a href="{{ url_for('calendar') }}"><button>View Volunteer Availability</button></a>
+<a href="{{ url_for('search') }}"><button>Search Volunteers</button></a>
+<a href="{{ url_for('report') }}"><button>Generate Report</button></a>
+<a href="{{ url_for('upload') }}"><button>Upload Documents</button></a>
+{% endblock %}
+<div class="footer">
+    <p>&copy; 2023 Volunteer Management System</p>

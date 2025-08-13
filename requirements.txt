@@ -1,0 +1,10 @@
+Flask
+pymongo
+flask_socketio
+flask_wtf
+wtforms
+email_validator
+Flask-Login
+Flask-PyMongo
+celery
+reportlab

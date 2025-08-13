@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Search Volunteers</h2>
+<form method="GET">
+    <input type="text" name="q" placeholder="Search by email" value="{{ request.args.get('q', '') }}">
+    <button type="submit">Search</button>
+</form>
+
+<h3>Results</h3>
+{% for volunteer in volunteers %}
+<div class="card">
+    Email: {{ volunteer.email }}
+</div>
+{% else %}
+<p>No volunteers found.</p>
+{% endfor %}
+{% endblock %}

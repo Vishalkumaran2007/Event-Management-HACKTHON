@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Volunteer Report</h2>
+{% for item in data %}
+<div class="card">
+    Role: {{ item._id }}<br>
+    Count: {{ item.count }}
+</div>
+{% else %}
+<p>No data available.</p>
+{% endfor %}
+{% endblock %}

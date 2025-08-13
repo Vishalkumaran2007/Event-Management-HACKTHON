@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Volunteer Dashboard</h2>
+
+<h3>Your Assigned Shifts</h3>
+{% for shift in shifts %}
+<div class="card">
+    <strong>{{ shift.shift_name }}</strong><br>
+    Date: {{ shift.date }}
+</div>
+{% else %}
+<p>You are not assigned to any shifts.</p>
+{% endfor %}
+
+<a href="{{ url_for('calendar') }}"><button>Mark Availability</button></a>
+<a href="{{ url_for('upload') }}"><button>Upload Documents</button></a>
+{% endblock %}

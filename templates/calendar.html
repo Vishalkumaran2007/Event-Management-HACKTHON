@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Availability</h2>
+<form method="POST">
+    <label>Select Date:</label>
+    <input type="date" name="date" required>
+    <label>Available:</label>
+    <select name="available" required>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+    </select>
+    <button type="submit">Save Availability</button>
+</form>
+
+<h3>Availability Records</h3>
+{% for avail in availability %}
+<div class="card">
+    Date: {{ avail.date }} - Available: {{ avail.available }}
+</div>
+{% else %}
+<p>No availability marked yet.</p>
+{% endfor %}
+{% endblock %}
